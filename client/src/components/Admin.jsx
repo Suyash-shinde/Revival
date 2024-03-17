@@ -8,7 +8,7 @@ function Admin() {
     desc: "",
     date: "",
     place: "",
-    type: null,
+    eventtype: "",
   });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,12 +16,13 @@ function Admin() {
     console.log(JSON.stringify(formData));
   };
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+
     // setValues({ ...values, [e.target.name]: e.target.value });
-    setValues({
-      ...values,
-      [e.target.name]:
-        e.target.type === "radio" ? e.target.value : e.target.value,
-    });
+    // const { name, value, type, checked } = e.target;
+    // const newValue = type === "radio" ? (checked ? value : "") : value;
+    // setValues({ ...values, [name]: newValue });
   };
 
   return (
@@ -100,6 +101,28 @@ function Admin() {
               /> */}
             </Form.Group>
             <h3>What are you organizing ? </h3>
+            <Form.Group className="mb-3">
+              <Form.Check // prettier-ignore
+                type="radio"
+                id="eventtype1"
+                name="eventtype"
+                label="Event"
+                value="Event"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+              <Form.Check // prettier-ignore
+                type="radio"
+                id="eventtype2"
+                name="eventtype"
+                value="Drive"
+                label="Drive"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </Form.Group>
             {/* {["radio"].map((type) => (
               <div key={`inline-${type}`} className="mb-3">
                 <Form.Check
@@ -118,19 +141,7 @@ function Admin() {
                 />
               </div>
             ))} */}
-            {["Drive", "Event"].map((option) => (
-              <Form.Check
-                key={option}
-                inline
-                label={option}
-                name="type"
-                type="radio"
-                value={option}
-                id={`type-${option}`}
-                checked={values.type === option} // Set checked state for radio buttons
-                onChange={handleChange}
-              />
-            ))}
+
             <Button variant="primary" type="submit">
               Submit
             </Button>
