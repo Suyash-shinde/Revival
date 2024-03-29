@@ -2,16 +2,34 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import { login } from "../APIposts";
 
 function Login() {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+  const validate= ()=>{
+    if(email===""){
+      return false;
+    }
+    if(password===""){
+      return false;
+    }
+    return true;
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = { ...values };
-    console.log(JSON.stringify(formData));
+    const {email,password} = values;
+    if(validate()){
+        const {data} = await login({email,password});
+        if(data.status===false){
+          console.log(data.msg);
+        }
+        else{
+          console.log(data.msg);
+        }
+    }
   };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });

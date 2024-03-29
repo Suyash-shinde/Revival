@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import { register } from "../APIposts";
 
 function Signup() {
   const [values, setValues] = useState({
@@ -10,10 +11,34 @@ function Signup() {
     password: "",
     mobile: "",
   });
-  const handleSubmit = (e) => {
+  const validate=()=>{
+    if(values.name===""){
+      return false;
+    }
+    if(values.password===""){
+      return false;
+    }
+    if(values.email===""){
+      return false;
+    }
+    if(values.password.length<8){
+      return false;
+    }
+    return true;
+  }
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const formData = { ...values };
-    console.log(JSON.stringify(formData));
+    const{name,email,password,mobile}=values;
+    if(validate()){
+      const {data} = await register({name, password, email, mobile});
+      if(data.status===false){
+        console.log(data.msg);
+      }
+      else{
+        console.log(data.msg);
+      }
+    }
+
   };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
