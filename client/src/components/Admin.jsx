@@ -51,7 +51,7 @@ function Admin() {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Event decription</Form.Label>
+              <Form.Label>Event description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}

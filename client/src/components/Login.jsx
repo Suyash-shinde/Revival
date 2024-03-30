@@ -3,12 +3,14 @@ import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import { login } from "../APIposts";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const validate= ()=>{
     if(email===""){
       return false;
@@ -28,6 +30,7 @@ function Login() {
         }
         else{
           console.log(data.msg);
+          navigate("/Home");
         }
     }
   };
